@@ -25,7 +25,7 @@ window.addEventListener("load", function() {
  *	return: none
  */
 function CheckCookie() {
-	let cookies = {};
+	let cookies = new Map();
 
 	document.cookie.split("; ").forEach((element) => {
 		cookies.set(element.split("=")[0], element.split("=")[1]);
