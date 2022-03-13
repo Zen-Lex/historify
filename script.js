@@ -7,7 +7,7 @@
 //***************************************************************************************************/                                               
 let token = "";
 let authorize_url =
-	"https://accounts.spotify.com/authorize?client_id=545cac6976dc48ce9471fd8db5aa73c2&response_type=token&redirect_uri=https://zenlex.xyz/historify&scope=user-read-recently-played%20user-modify-playback-state%20user-library-read%20user-library-modify%20streaming";
+	"https://accounts.spotify.com/authorize?client_id=545cac6976dc48ce9471fd8db5aa73c2&response_type=token&redirect_uri=https://zen-lex.github.io/historify&scope=user-read-recently-played%20user-modify-playback-state%20user-library-read%20user-library-modify%20streaming";
 
 window.addEventListener("load", function() {
 	if (window.location.hash.length > 0) {
