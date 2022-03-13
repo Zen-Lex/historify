@@ -7,7 +7,7 @@
 //***************************************************************************************************/                                               
 let token = "";
 let authorize_url =
-	"https://accounts.spotify.com/authorize?client_id=545cac6976dc48ce9471fd8db5aa73c2&response_type=token&redirect_uri=https://zenlex.xyz/historify&scope=user-read-recently-played%20user-modify-playback-state%20user-library-read%20user-library-modify%20streaming";
+	"https://accounts.spotify.com/authorize?client_id=545cac6976dc48ce9471fd8db5aa73c2&response_type=token&redirect_uri=https://zen-lex.github.io/historify&scope=user-read-recently-played%20user-modify-playback-state%20user-library-read%20user-library-modify%20streaming";
 
 window.addEventListener("load", function() {
 	if (window.location.hash.length > 0) {
@@ -15,7 +15,6 @@ window.addEventListener("load", function() {
 		window.location.href = window.location.origin + window.location.pathname;
 	}
 
-	CheckCookie();
 	RecentPlayed();
 });
 
@@ -25,7 +24,7 @@ window.addEventListener("load", function() {
  *	return: none
  */
 function CheckCookie() {
-	let cookies = {};
+	let cookies = new Map();
 
 	document.cookie.split("; ").forEach((element) => {
 		cookies.set(element.split("=")[0], element.split("=")[1]);
@@ -44,7 +43,9 @@ function CheckCookie() {
  *	para:	none
  *	return:	none
  */
-async function RecentPlayed() {
+function RecentPlayed() {
+	CheckCookie();
+
 	fetch(`https://api.spotify.com/v1/me/player/recently-played?limit=50&access_token=${token}`)
 		.then(function (response) {
 			if (response.ok) {
@@ -70,7 +71,7 @@ async function RecentPlayed() {
 			//Add an article for each track and display it's info
 			for(let i = 0; i < data.items.length; i++) {
 				ids.push(data.items[i].track.id)
-				AddTrack(section, data.items[i].track, i, likedArray[i] || false);
+				AddTrack(section, data.items[i].track, i, likedArray ? likedArray[i] : false);
 			}
 
 			//Add Events on each article's button
@@ -218,8 +219,6 @@ function AddTrack(section, track, noTrack, isLiked) {
 		</div>
 	</div>
 	</article>`;
-
-	IsLiked(track.id, noTrack);
 }
 
 /* 
