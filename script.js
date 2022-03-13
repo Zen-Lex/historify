@@ -15,7 +15,6 @@ window.addEventListener("load", function() {
 		window.location.href = window.location.origin + window.location.pathname;
 	}
 
-	CheckCookie();
 	RecentPlayed();
 });
 
@@ -45,6 +44,8 @@ function CheckCookie() {
  *	return:	none
  */
 function RecentPlayed() {
+	CheckCookie();
+
 	fetch(`https://api.spotify.com/v1/me/player/recently-played?limit=50&access_token=${token}`)
 		.then(function (response) {
 			if (response.ok) {
