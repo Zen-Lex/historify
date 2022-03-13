@@ -43,7 +43,7 @@ function CheckCookie() {
  *	para:	none
  *	return:	none
  */
-function RecentPlayed() {
+async function RecentPlayed() {
 	CheckCookie();
 
 	fetch(`https://api.spotify.com/v1/me/player/recently-played?limit=50&access_token=${token}`)
