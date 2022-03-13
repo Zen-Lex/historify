@@ -63,6 +63,7 @@ function RecentPlayed() {
 			}
 
 			let likedArray = IsLiked(ids.join(","));
+			console.log(likedArray);
 
 			//Get the HTLM Page's section and empty it
 			let section = document.getElementsByTagName("section")[0];
@@ -71,7 +72,7 @@ function RecentPlayed() {
 			//Add an article for each track and display it's info
 			for(let i = 0; i < data.items.length; i++) {
 				ids.push(data.items[i].track.id)
-				AddTrack(section, data.items[i].track, i, likedArray[i] || false);
+				AddTrack(section, data.items[i].track, i, likedArray ? likedArray[i] : false);
 			}
 
 			//Add Events on each article's button
@@ -176,9 +177,9 @@ function ClickMessage(msg, noTrack) {
  *	return:	none
  +	Note: A track already like can't be dislike
  */
-function IsLiked(id) {
-
-	fetch(`https://api.spotify.com/v1/me/tracks/contains?ids=${id}&access_token=${token}`)
+function IsLiked(ids) {
+	console.log(ids);
+	fetch(`https://api.spotify.com/v1/me/tracks/contains?ids=${ids}&access_token=${token}`)
 		.then(function (response) {
 			if (response.ok) {
 				return response.json();
