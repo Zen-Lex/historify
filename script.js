@@ -44,7 +44,7 @@ function CheckCookie() {
  *	para:	none
  *	return:	none
  */
-function RecentPlayed() {
+async function RecentPlayed() {
 	fetch(`https://api.spotify.com/v1/me/player/recently-played?limit=50&access_token=${token}`)
 		.then(function (response) {
 			if (response.ok) {
@@ -61,7 +61,7 @@ function RecentPlayed() {
 				ids.push(data.items[i].track.id);
 			}
 
-			let likedArray = IsLiked(ids.join(","));
+			let likedArray = await IsLiked(ids.join(","));
 
 			//Get the HTLM Page's section and empty it
 			let section = document.getElementsByTagName("section")[0];
@@ -176,21 +176,22 @@ function ClickMessage(msg, noTrack) {
  +	Note: A track already like can't be dislike
  */
 function IsLiked(id) {
-
-	fetch(`https://api.spotify.com/v1/me/tracks/contains?ids=${id}&access_token=${token}`)
-		.then(function (response) {
-			if (response.ok) {
-				return response.json();
-			}
-			throw new Error("An Error as occure"); 
-		})
-		.then( function(data) {
-			return data;
-		})
-		.catch(function (error) {
-            console.log(error.message);
-			return null;
-		})
+	return new Promise((resolve, reject) => {
+		fetch(`https://api.spotify.com/v1/me/tracks/contains?ids=${id}&access_token=${token}`)
+			.then(function (response) {
+				if (response.ok) {
+					return response.json();
+				}
+				throw new Error("An Error as occure"); 
+			})
+			.then( function(data) {
+				resolve(data);
+			})
+			.catch(function (error) {
+				console.log(error.message);
+				reject(error.message);
+			})
+	})
 }
 
 /* 
@@ -212,7 +213,7 @@ function AddTrack(section, track, noTrack, isLiked) {
 		<figure><a href="${track.external_urls.spotify}"><img src="${track.album.images[1].url}" alt="Cover of the album"></a></figure>
 		<div class="button">
 			<input type="image" alt="Play" class="play" src="img/play.svg">
-			<input type="image" alt="Like" class="like" src="${isLiked ? "img/liked.svg" : "img/likeable.svg"}>
+			<input type="image" alt="Like" class="like" src=${isLiked ? "img/liked.svg" : "img/likeable.svg"}>
 			<input type="image" alt="Add to queue" class="queue" src="img/plus.svg">			
 		</div>
 	</div>
