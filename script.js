@@ -43,7 +43,7 @@ function CheckCookie() {
  *	para:	none
  *	return:	none
  */
-async function RecentPlayed() {
+function RecentPlayed() {
 	CheckCookie();
 
 	fetch(`https://api.spotify.com/v1/me/player/recently-played?limit=50&access_token=${token}`)
@@ -56,13 +56,27 @@ async function RecentPlayed() {
 		.then(function (data) {
 			//Array to store the track's ids
 			let ids = [];
+			let likedArray;
 
 			//Parse the data to retrieve all ids
 			for (let i = 0; i < data.items.length; i++) {
 				ids.push(data.items[i].track.id);
 			}
 
-			let likedArray = await IsLiked(ids.join(","));
+			fetch(`https://api.spotify.com/v1/me/tracks/contains?ids=${ids.join(',')}&access_token=${token}`)
+				.then(function (response) {
+					if (response.ok) {
+						return response.json();
+					}
+					throw new Error("An Error as occure");
+				})
+				.then(function (data) {
+					likedArray = data;
+				})
+				.catch(function (error) {
+					console.log(error.message);
+					likedArray = null;
+				});
 
 			//Get the HTLM Page's section and empty it
 			let section = document.getElementsByTagName("section")[0];
@@ -178,20 +192,7 @@ function ClickMessage(msg, noTrack) {
  */
 function IsLiked(id) {
 	return new Promise((resolve, reject) => {
-		fetch(`https://api.spotify.com/v1/me/tracks/contains?ids=${id}&access_token=${token}`)
-			.then(function (response) {
-				if (response.ok) {
-					return response.json();
-				}
-				throw new Error("An Error as occure"); 
-			})
-			.then( function(data) {
-				resolve(data);
-			})
-			.catch(function (error) {
-				console.log(error.message);
-				reject(error.message);
-			})
+		
 	})
 }
 
