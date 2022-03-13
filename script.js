@@ -178,15 +178,16 @@ function ClickMessage(msg, noTrack) {
  +	Note: A track already like can't be dislike
  */
 function IsLiked(ids) {
-	console.log(ids);
 	fetch(`https://api.spotify.com/v1/me/tracks/contains?ids=${ids}&access_token=${token}`)
 		.then(function (response) {
 			if (response.ok) {
+				console.log(response)
 				return response.json();
 			}
 			throw new Error("An Error as occure"); 
 		})
-		.then( function(data) {
+		.then(function(data) {
+			console.log(data)
 			return data;
 		})
 		.catch(function (error) {
@@ -214,13 +215,11 @@ function AddTrack(section, track, noTrack, isLiked) {
 		<figure><a href="${track.external_urls.spotify}"><img src="${track.album.images[1].url}" alt="Cover of the album"></a></figure>
 		<div class="button">
 			<input type="image" alt="Play" class="play" src="img/play.svg">
-			<input type="image" alt="Like" class="like" src="${isLiked ? "img/liked.svg" : "img/likeable.svg"}>
+			<input type="image" alt="Like" class="like" src=${isLiked ? "img/liked.svg" : "img/likeable.svg"}>
 			<input type="image" alt="Add to queue" class="queue" src="img/plus.svg">			
 		</div>
 	</div>
 	</article>`;
-
-	IsLiked(track.id, noTrack);
 }
 
 /* 
