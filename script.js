@@ -11,7 +11,7 @@ let authorize_url =
 
 window.addEventListener("load", function() {
 	if (window.location.hash.length > 0) {
-		document.cookie = `access_token=${window.location.hash.split('&')[0].slice(14)}`;
+		document.cookie = `access_token=${window.location.hash.split('&')[0].slice(14)}; max-age=3600;`;
 		window.location.href = window.location.origin + window.location.pathname;
 	}
 
