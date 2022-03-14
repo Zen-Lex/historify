@@ -56,49 +56,44 @@ function RecentPlayed() {
 		.then(function (data) {
 			//Array to store the track's ids
 			let ids = [];
-			let likedArray;
 
 			//Parse the data to retrieve all ids
 			for (let i = 0; i < data.items.length; i++) {
 				ids.push(data.items[i].track.id);
 			}
 
-			fetch(`https://api.spotify.com/v1/me/tracks/contains?ids=${ids.join(',')}&access_token=${token}`)
+			fetch(`https://api.spotify.com/v1/me/tracks/contains?ids=${ids.join(",")}&access_token=${token}`)
 				.then(function (response) {
 					if (response.ok) {
 						return response.json();
 					}
 					throw new Error("An Error as occure");
 				})
-				.then(function (data) {
-					likedArray = data;
+				.then(function (likedArray) {
+					//Get the HTLM Page's section and empty it
+					let section = document.getElementsByTagName("section")[0];
+					section.innerHTML = "";
+
+					//Add an article for each track and display it's info
+					for (let i = 0; i < data.items.length; i++) {
+						ids.push(data.items[i].track.id);
+						AddTrack(section, data.items[i].track, i, likedArray[i]);
+					}
+
+					//Add Events on each article's button
+					AddListener(data);
+
+					//Display the native page button
+					document.querySelectorAll(".pageBtn").forEach(function (button) {
+						button.style.visibility = "visible";
+					});
 				})
 				.catch(function (error) {
 					console.log(error.message);
-					likedArray = null;
 				});
-
-			//Get the HTLM Page's section and empty it
-			let section = document.getElementsByTagName("section")[0];
-			section.innerHTML = "";
-
-			//Add an article for each track and display it's info
-			for(let i = 0; i < data.items.length; i++) {
-				ids.push(data.items[i].track.id)
-				AddTrack(section, data.items[i].track, i, likedArray ? likedArray[i] : false);
-			}
-
-			//Add Events on each article's button
-			AddListener(data);
-			
-			//Display the native page button
-			document.querySelectorAll(".pageBtn").forEach(function(button) {
-				button.style.visibility = "visible";
-			})
 		})
 		.catch(function(error) {
             console.log(error.message);
-
         });
 }
 
@@ -180,20 +175,6 @@ function ClickMessage(msg, noTrack) {
 	setTimeout(function () {
     	p.style.display = "none";
   	}, 3000);
-}
-
-/* 
- * Function: IsLiked: Check if the track is liked or not		
- *			 and change the like button image in consequence  
- *	para:	id: the track's id
- *			noTrack: the number of the track to ckeck (in order of the most recent to the oldest listening)
- *	return:	none
- +	Note: A track already like can't be dislike
- */
-function IsLiked(id) {
-	return new Promise((resolve, reject) => {
-		
-	})
 }
 
 /* 
