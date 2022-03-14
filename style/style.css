@@ -133,7 +133,7 @@ body {
 	cursor: default;
 }
 
-@media (max-width: 1024px) {
+@media handheld, (max-width: 768px) {
 	article {
 		display: flex;
 		flex-direction: column;

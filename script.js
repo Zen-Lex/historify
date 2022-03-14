@@ -76,7 +76,6 @@ function RecentPlayed() {
 
 					//Add an article for each track and display it's info
 					for (let i = 0; i < data.items.length; i++) {
-						ids.push(data.items[i].track.id);
 						AddTrack(section, data.items[i].track, i, likedArray[i]);
 					}
 
@@ -147,18 +146,18 @@ function Play(uri) {
  *	para:	id: the track's id
  *	return:	none
  */
-function Like(id) {
-	fetch(`https://api.spotify.com/v1/me/tracks?ids=${id}&access_token=${token}`, { "method": "PUT" })
+function Like(id, method) {
+	fetch(`https://api.spotify.com/v1/me/tracks?ids=${id}&access_token=${token}`, {method: method})
 		.then(function (response) {
 			if (response.ok) {
 				return response.json();
 			}
-			
-			throw new Error("An Error as occure"); 
+
+			throw new Error("An Error as occure");
 		})
 		.catch(function (error) {
-            console.log(error.message);
-	    });
+			console.log(error.message);
+		});
 }
 
 /* 
@@ -210,6 +209,7 @@ function AddTrack(section, track, noTrack, isLiked) {
  +	Note: The buttons are displayed when all EventListener are added
  */
 function AddListener(data) {
+	let likeSrc = "img/likeable.svg";
 	let playBtn = document.getElementsByClassName("play");
 	let likeBtn = document.getElementsByClassName("like");
 	let queueBtn = document.getElementsByClassName("queue");
@@ -227,21 +227,26 @@ function AddListener(data) {
 		});
 
 		likeBtn[i].addEventListener("click", function () {
-      		console.log("Add to the title liked: ", id);
+			if (img.getAttribute("src") === "img/likeable.svg") {
+				console.log("Added to Liked Songs: ", id);
+				ClickMessage("Added to Liked Songs", i);
+				Like(id, "PUT");
 
-      		if (img.getAttribute("src") === "img/likeable.svg") {
-        		for (let j = 0; j < data.items.length; j++) {
-          			if (data.items[j].track.id === id) {
-            			document.getElementsByClassName("like")[j].setAttribute("src", "img/liked.svg");
-          			}
-        		}
-        		ClickMessage("Added to Liked Title", i);
-        		Like(id);
+				likeSrc = "img/likeable.svg";
+			} else {
+				console.log("Remove from Liked Songs: ", id);
+				ClickMessage("Remove from Liked Songs", i);
+				Like(id, "DELETE");
+
+				likeSrc = "img/liked.svg";
 			}
-			  
-			else {
-        		ClickMessage("Already liked", i);
-      		}
+
+			//Udpate the like button src
+			for (let j = 0; j < data.items.length; j++) {
+				if (data.items[j].track.id === id) {
+					document.getElementsByClassName("like")[j].setAttribute("src", likeSrc);
+				}
+			}
 		});
 
 		queueBtn[i].addEventListener("click", function () {
@@ -334,6 +339,4 @@ function GetDeviceId() {
         });
 }
 
-
-
-//* Author: JABK /// Creation: 05.01.2021 /// Last Update: 13.03.2022 /// Version: 1.1
+//* Author: JABK /// Creation: 05.01.2021 /// Last Update: 14.03.2022 /// Version: 1.2
