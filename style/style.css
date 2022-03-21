@@ -90,7 +90,7 @@ input[type=image]:hover {
 
 input {
 	border: 0;
-	background-color: #1DB954;
+	background-color: #1db954;
 	color: #ffffff;
 	outline: none;
 	appearance: none;
@@ -133,7 +133,23 @@ body {
 	cursor: default;
 }
 
-@media handheld, (max-width: 768px) {
+.sample_info {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.sample_info a {
+	font-style: italic;
+	text-decoration: underline;
+}
+
+.sample_info a:hover {
+	transition: all 0.5;
+	color: #1db954;
+}
+
+@media only handheld {
 	article {
 		display: flex;
 		flex-direction: column;

@@ -4572,10 +4572,10 @@ function RecentPlayed() {
 	//Get the HTLM Page's section and empty it
 	let section = document.getElementsByTagName("section")[0];
 	section.innerHTML = `<article>
-	<div class="trackInfo">
-		<p>
+	<div>
+		<p class="sample_info">
 			<span class="title">This is a version with sample data</span><br>
-			<a href="/historify">Click here to see a version with live data</a>
+			<a href="../index.html">Click here to see a version with live data</a>
 		</p>
 	</div>
 	</article>`;
@@ -4628,9 +4628,9 @@ function AddTrack(section, track, noTrack, isLiked) {
 		</p>
 		<figure><a href="${track.external_urls.spotify}"><img src="${track.album.images[1].url}" alt="Cover of the album"></a></figure>
 		<div class="button">
-			<input type="image" alt="Play" class="play" src="img/play.svg">
-			<input type="image" alt="Like" class="like" src=${isLiked ? "img/liked.svg" : "img/likeable.svg"}>
-			<input type="image" alt="Add to queue" class="queue" src="img/plus.svg">			
+			<input type="image" alt="Play" class="play" src="../img/play.svg">
+			<input type="image" alt="Like" class="like" src=${isLiked ? "../img/liked.svg" : "../img/likeable.svg"}>
+			<input type="image" alt="Add to queue" class="queue" src="../img/plus.svg">			
 		</div>
 	</div>
 	</article>`;
@@ -4643,7 +4643,7 @@ function AddTrack(section, track, noTrack, isLiked) {
  +	Note: The buttons are displayed when all EventListener are added
  */
 function AddListener(data) {
-	let likeSrc = "img/likeable.svg";
+	let likeSrc = "../img/likeable.svg";
 	let playBtn = document.getElementsByClassName("play");
 	let likeBtn = document.getElementsByClassName("like");
 	let queueBtn = document.getElementsByClassName("queue");
@@ -4660,17 +4660,17 @@ function AddListener(data) {
 		});
 
 		likeBtn[i].addEventListener("click", function () {
-			if (img.getAttribute("src") === "img/likeable.svg") {
+			if (img.getAttribute("src") === "../img/likeable.svg") {
 				console.log("Added to Liked Songs: ", id);
         		ClickMessage("Added to Liked Songs", i);
 
-				likeSrc = "img/likeable.svg";
+				likeSrc = "../img/likeable.svg";
 			}
 			else {
 				console.log("Remove from Liked Songs: ", id);
         		ClickMessage("Remove from Liked Songs", i);
 
-				likeSrc = "img/liked.svg";
+				likeSrc = "../img/liked.svg";
       		}
 			  
 			//Udpate the like button src

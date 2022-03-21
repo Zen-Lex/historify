@@ -2,6 +2,8 @@
 
 #### A simple client-side web app to display the last songs listen with your Spotify account.
 
+!["Screenshot of the web app"](./screenshots/screenshot_wide.png)
+
 ### Two ways to try it :
   1. By logging with your own [Spotify account](https://zen-lex.github.io/historify)
   2. Or with [sample data](https://zen-lex.github.io/historify/sample)
@@ -20,5 +22,10 @@ Once this is done, the application will call different endpoints to get the rece
 You can interract with each tracks to either, play the song (only if a Spotify client is playing something), like it or add it to queue. You can also click on the track, artist or album name to open the corresponding page in Spotify Web Player.
 
 Have Fun <3 😊
+
+### Why I've done that :
+As always, a new project is a perfect occasion for me to develop and learn new skills. In this case, it was simply to learn how to use JavaScript in a client-side environment and to how to work with an API (making request, parsing data, etc.).
+
+For the API, Spotify is my main way to listen to music in my everyday life and their API is rich and well documented so it was a natural choice for me to work with it.
 
 ---------------------------
