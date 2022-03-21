@@ -4664,13 +4664,13 @@ function AddListener(data) {
 				console.log("Added to Liked Songs: ", id);
         		ClickMessage("Added to Liked Songs", i);
 
-				likeSrc = "../img/likeable.svg";
+				likeSrc = "../img/liked.svg";
 			}
 			else {
 				console.log("Remove from Liked Songs: ", id);
         		ClickMessage("Remove from Liked Songs", i);
 
-				likeSrc = "../img/liked.svg";
+				likeSrc = "../img/likeable.svg";
       		}
 			  
 			//Udpate the like button src

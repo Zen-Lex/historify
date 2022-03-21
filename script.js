@@ -232,13 +232,13 @@ function AddListener(data) {
 				ClickMessage("Added to Liked Songs", i);
 				Like(id, "PUT");
 
-				likeSrc = "img/likeable.svg";
+				likeSrc = "img/liked.svg";
 			} else {
 				console.log("Remove from Liked Songs: ", id);
 				ClickMessage("Remove from Liked Songs", i);
 				Like(id, "DELETE");
 
-				likeSrc = "img/liked.svg";
+				likeSrc = "img/likeable.svg";
 			}
 
 			//Udpate the like button src
