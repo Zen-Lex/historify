@@ -149,21 +149,50 @@ body {
 	color: #1db954;
 }
 
-/*- General media tranformation */
-@media only handheld, (max-width: 720px) {
+/* - For mobile and small screens */
+@media screen and (orientation: portrait) and (min-width: 768px) {
 	article {
+		display: flex;
 		flex-direction: column;
 		align-items: center;
+		text-align: center;
+		width: 50rem;
+		line-height: 4rem;
 	}
 	
+	figure img {
+		width: 700px;
+		height: 700px;
+	}
+
+	figure img:hover {
+		width: 710px;
+		height: 710px;
+	}
+
 	div.button {
 		align-self: center;
 		margin: 0;
+		padding-top: 1.75rem;
+		transform: scale(2.5);
+		height: 50px;
 	}
 
 	.trackInfo {
+		transform-origin: top;
+		padding-bottom: 4rem;
 		flex-direction: column;
 		align-content: center;
+	}
+
+	.trackInfo p, span.album {
+		max-width: none;
+		font-size: 40px;
+	}
+
+	.trackInfo span.title {
+		max-width: none;
+		font-size: 57.5px;
 	}
 
 	p.clickMsg {
@@ -182,52 +211,11 @@ body {
 	}
 }
 
-/* - For mobile and smaller screens */
-@media only handheld {
-	article {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		text-align: center;
-		width: 50rem;
-		line-height: 4rem;
-	}
-
-	figure img {
-		width: 700px;
-		height: 700px;
-	}
-
-	figure img:hover {
-		width: 710px;
-		height: 710px;
-	}
-
-	div.button {
-		padding-top: 1.75rem;
-		transform: scale(2.5);
-		height: 50px;
-	}
-
-	.trackInfo {
-		transform-origin: top;
-		padding-bottom: 4rem;
-	}
-
-	.trackInfo p, span.album {
-		max-width: none;
-		font-size: 40px;
-	}
-
-	.trackInfo span.title {
-		max-width: none;
-		font-size: 57.5px;
-	}
-}
-
 /*-  For laptop and large screens */
 @media screen and (max-width: 720px) {
 	article {
+		flex-direction: column;
+		align-items: center;
 		padding: 0;
 		width: 20rem;
 	}
